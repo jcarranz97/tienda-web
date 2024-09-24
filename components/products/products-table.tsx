@@ -43,7 +43,7 @@ const columns = [
 const TableFooter = ({ numProducts }: { numProducts: number }) => {
     return (
         <div className="flex justify-between items-center">
-            <span className="text-default-400 text-small">Total {numProducts} users</span>
+            <span className="text-default-400 text-small">Total {numProducts} products</span>
             <label className="flex items-center text-default-400 text-small">
                 Rows per page:
                 <select className="bg-transparent outline-none text-default-400 text-small">
