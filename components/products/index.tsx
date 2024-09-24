@@ -7,10 +7,10 @@ import { ExportIcon } from "@/components/icons/accounts/export-icon";
 import { InfoIcon } from "@/components/icons/accounts/info-icon";
 import { TrashIcon } from "@/components/icons/accounts/trash-icon";
 import { HouseIcon } from "@/components/icons/breadcrumb/house-icon";
-import { UsersIcon } from "@/components/icons/breadcrumb/users-icon";
 import { SettingsIcon } from "@/components/icons/sidebar/settings-icon";
 import { AddProduct } from "./add-product";
 import { TableWrapper } from "./products-table";
+import { ProductsIcon } from "../icons/sidebar/products-icon";
 
 export default function Products() {
   return (
@@ -25,8 +25,8 @@ export default function Products() {
         </li>
 
         <li className="flex gap-2">
-          <UsersIcon />
-          <span>Users</span>
+          <ProductsIcon />
+          <span>Products </span>
           <span> / </span>{" "}
         </li>
         <li className="flex gap-2">
