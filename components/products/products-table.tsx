@@ -44,14 +44,14 @@ export const TableWrapper = () => {
     const [products, setProducts] = useState<FetchProductsResponse | null>(null)
  
     useEffect(() => {
-        const getPosts = async () => {
+        const getProducts = async () => {
           const data = await fetchProducts(); // Call the external function
           if (data) {
             setProducts(data); // Set the fetched data to the state
           }
         };
     
-        getPosts();
+        getProducts();
       }, []);
 
     if (!products) return <div>Loading...</div>
