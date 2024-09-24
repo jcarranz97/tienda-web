@@ -12,7 +12,7 @@ interface Props {
 
 export const RenderCell = ({ product, columnKey }: Props) => {
   // @ts-ignore
-  const cellValue = user[columnKey];
+  const cellValue = product[columnKey];
   switch (columnKey) {
     case "name":
       return (
@@ -42,11 +42,11 @@ export const RenderCell = ({ product, columnKey }: Props) => {
           size="sm"
           variant="flat"
           color={
-            cellValue === "active"
+            cellValue === "available"
               ? "success"
-              : cellValue === "paused"
+              : cellValue === "not available"
               ? "danger"
-              : "warning"
+              : "default"
           }
         >
           <span className="capitalize text-xs">{cellValue}</span>
@@ -58,14 +58,14 @@ export const RenderCell = ({ product, columnKey }: Props) => {
         <div className="flex items-center gap-4 ">
           <div>
             <Tooltip content="Details">
-              <button onClick={() => console.log("View user", product.id_article)}>
+              <button onClick={() => console.log("View user", product.id_product)}>
                 <EyeIcon size={20} fill="#979797" />
               </button>
             </Tooltip>
           </div>
           <div>
             <Tooltip content="Edit user" color="secondary">
-              <button onClick={() => console.log("Edit user", product.id_article)}>
+              <button onClick={() => console.log("Edit user", product.id_product)}>
                 <EditIcon size={20} fill="#979797" />
               </button>
             </Tooltip>
@@ -74,7 +74,7 @@ export const RenderCell = ({ product, columnKey }: Props) => {
             <Tooltip
               content="Delete user"
               color="danger"
-              onClick={() => console.log("Delete user", product.id_article)}
+              onClick={() => console.log("Delete user", product.id_product)}
             >
               <button>
                 <DeleteIcon size={20} fill="#FF0080" />
@@ -83,6 +83,12 @@ export const RenderCell = ({ product, columnKey }: Props) => {
           </div>
         </div>
       );
+    case "purchase_price":
+    case "sale_price":
+      // In case it is purchase price or sale price, we add format
+      // as dolar sign with 2 decimal places and return it
+      // If null, we return an empty string
+      return cellValue ? `$${cellValue.toFixed(2)}` : "";
     default:
       return cellValue;
   }

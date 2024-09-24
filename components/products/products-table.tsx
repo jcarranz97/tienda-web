@@ -6,40 +6,14 @@ import {
     TableColumn,
     TableHeader,
     TableRow,
-    dataFocusVisibleClasses,
-    getKeyValue,
 } from "@nextui-org/react";
 import React from "react";
 import { useEffect, useState } from 'react';
-import useSWR from "swr";
+import { fetchProducts } from "./actions";
+import { FetchPostsResponse, } from "./actions";
+import { RenderCell } from "./render-cell";
 
-  
-const rows = [
-{
-    key: "1",
-    name: "Tony Reichert",
-    role: "CEO",
-    status: "Active",
-},
-{
-    key: "2",
-    name: "Zoey Lang",
-    role: "Technical Lead",
-    status: "Paused",
-},
-{
-    key: "3",
-    name: "Jane Fisher",
-    role: "Senior Developer",
-    status: "Active",
-},
-{
-    key: "4",
-    name: "William Howard",
-    role: "Community Manager",
-    status: "Vacation",
-},
-];
+
 
 const columns = [
 {
@@ -54,22 +28,31 @@ const columns = [
     key: "status",
     label: "STATUS",
 },
+{
+    key: "purchase_price",
+    label: "PURCHASE PRICE",
+},
+{
+    key: "sale_price",
+    label: "SALE PRICE",
+},
 ];
 
 
-
 export const TableWrapper = () => {
-    const [posts, setPosts] = useState(null)
+
+    const [posts, setPosts] = useState<FetchPostsResponse | null>(null)
  
     useEffect(() => {
-      async function fetchPosts() {
-        let res = await fetch('http://localhost:8000/articles/get-articles')
-        let data = await res.json()
-        console.log(data)
-        setPosts(data)
-      }
-      fetchPosts()
-    }, [])
+        const getPosts = async () => {
+          const data = await fetchProducts(); // Call the external function
+          if (data) {
+            setPosts(data); // Set the fetched data to the state
+          }
+        };
+    
+        getPosts();
+      }, []);
 
     if (!posts) return <div>Loading...</div>
     return (
@@ -78,10 +61,14 @@ export const TableWrapper = () => {
             <TableHeader columns={columns}>
                 {(column) => <TableColumn key={column.key}>{column.label}</TableColumn>}
             </TableHeader>
-            <TableBody items={posts.articles}>
+            <TableBody items={posts.products}>
                 {(item) => (
-                <TableRow key={item.id_article}>
-                    {(columnKey) => <TableCell>{getKeyValue(item, columnKey)}</TableCell>}
+                <TableRow key={item.id_product}>
+                    {(columnKey) => 
+                        <TableCell>
+                            {RenderCell({ product: item, columnKey: columnKey })}
+                        </TableCell>}
+                    
                 </TableRow>
                 )}
             </TableBody>
