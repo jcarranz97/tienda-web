@@ -10,7 +10,7 @@ import {
 import React from "react";
 import { useEffect, useState } from 'react';
 import { fetchProducts } from "./actions";
-import { FetchPostsResponse, } from "./actions";
+import { FetchProductsResponse, } from "./actions";
 import { RenderCell } from "./render-cell";
 
 
@@ -41,27 +41,27 @@ const columns = [
 
 export const TableWrapper = () => {
 
-    const [posts, setPosts] = useState<FetchPostsResponse | null>(null)
+    const [products, setProducts] = useState<FetchProductsResponse | null>(null)
  
     useEffect(() => {
         const getPosts = async () => {
           const data = await fetchProducts(); // Call the external function
           if (data) {
-            setPosts(data); // Set the fetched data to the state
+            setProducts(data); // Set the fetched data to the state
           }
         };
     
         getPosts();
       }, []);
 
-    if (!posts) return <div>Loading...</div>
+    if (!products) return <div>Loading...</div>
     return (
         <div className=" w-full flex flex-col gap-4">
         <Table aria-label="Example table with dynamic content" isStriped>
             <TableHeader columns={columns}>
                 {(column) => <TableColumn key={column.key}>{column.label}</TableColumn>}
             </TableHeader>
-            <TableBody items={posts.products}>
+            <TableBody items={products.products}>
                 {(item) => (
                 <TableRow key={item.id_product}>
                     {(columnKey) => 

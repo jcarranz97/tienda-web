@@ -22,18 +22,18 @@ export type GetProductResponse = {
 
 
 // Define the type for the response
-export interface FetchPostsResponse {
+export interface FetchProductsResponse {
   products: SelectProduct[];
 }
 
 // Fetch posts with type annotations
-export const fetchProducts = async (): Promise<FetchPostsResponse | null> => {
+export const fetchProducts = async (): Promise<FetchProductsResponse | null> => {
   try {
     const res = await fetch('http://localhost:8000/products/get-products');
     if (!res.ok) {
       throw new Error(`Error: ${res.status}`);
     }
-    const data: FetchPostsResponse = await res.json();
+    const data: FetchProductsResponse = await res.json();
     return data; // Return the fetched data
   } catch (error) {
     console.error('Failed to fetch products:', error);
