@@ -14,16 +14,10 @@ export interface SelectProduct {
 }
 
 
-export type GetProductResponse = {
-    products: SelectProduct[];
-    newOffset: number | null;
-    totalProducts: number;
-};
-
-
 // Define the type for the response
 export interface FetchProductsResponse {
   products: SelectProduct[];
+  num_products: number;
 }
 
 // Fetch posts with type annotations
