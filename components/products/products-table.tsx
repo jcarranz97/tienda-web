@@ -24,7 +24,7 @@ const columns = [
 },
 {
     key: "shipping_group",
-    label: "ROLE",
+    label: "SHIPPING GROUP",
 },
 {
     key: "status",
@@ -63,7 +63,6 @@ const TableFooter: React.FC<TableFooterProps> = ({ numProducts, rowsPerPage, set
                         setPage(1); // Reset the page to 1 when changing the rows per page
                     }}
                 >
-                    <option value="1">1</option>
                     <option value="5">5</option>
                     <option value="10">10</option>
                     <option value="15">15</option>
@@ -110,7 +109,7 @@ export const TableWrapper = () => {
     const [products, setProducts] = useState<FetchProductsResponse>({ products: [], num_products: 1 });
     const [isLoading, setLoading] = useState(true);
     const [page, setPage] = React.useState(1);
-    const [rowsPerPage, setRowsPerPage] = React.useState(5);
+    const [rowsPerPage, setRowsPerPage] = React.useState(10);  // Default rows per page
 
     useEffect(() => {
         const getProducts = async () => {
