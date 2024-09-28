@@ -23,7 +23,7 @@ export interface FetchProductsResponse {
 // Fetch posts with type annotations
 export const fetchProducts = async (): Promise<FetchProductsResponse | null> => {
   try {
-    const res = await fetch('http://localhost:8000/products/get-products');
+    const res = await fetch('http://localhost:8000/products/');
     if (!res.ok) {
       throw new Error(`Error: ${res.status}`);
     }
