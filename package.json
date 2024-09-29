@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@nextui-org/react": "2.0.22",
+    "@nextui-org/react": "^2.4.8",
     "apexcharts": "^3.35.5",
     "clsx": "^2.0.0",
     "formik": "^2.4.6",
