@@ -105,22 +105,10 @@ const calculatePages = (totalItems: number, rowsPerPage: number): number => {
 
 
 
-export const TableWrapper = () => {
-    const [products, setProducts] = useState<FetchProductsResponse>({ products: [], num_products: 1 });
-    const [isLoading, setLoading] = useState(true);
+export const TableWrapper: React.FC<{ products: FetchProductsResponse, isLoading: boolean }> = ({ products, isLoading}) => {
+    
     const [page, setPage] = React.useState(1);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);  // Default rows per page
-
-    useEffect(() => {
-        const getProducts = async () => {
-          const data = await fetchProducts(); // Call the external function
-          if (data) {
-            setProducts(data); // Set the fetched data to the state
-          }
-        };
-        setLoading(false);
-        getProducts();
-      }, []);
 
     // Live calculation of the number of pages
     const pages = calculatePages(products.num_products, rowsPerPage);

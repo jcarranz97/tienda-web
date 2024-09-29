@@ -11,8 +11,40 @@ import { SettingsIcon } from "@/components/icons/sidebar/settings-icon";
 import { AddProduct } from "./add-product";
 import { TableWrapper } from "./products-table";
 import { ProductsIcon } from "../icons/sidebar/products-icon";
+import { 
+  FetchProductsResponse,
+  SelectProduct,
+  fetchProducts,
+} from "./actions";
+import { useEffect, useState } from 'react';
+
 
 export default function Products() {
+  const [products, setProducts] = useState<FetchProductsResponse>({ products: [], num_products: 1 });
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    const getProducts = async () => {
+      const data = await fetchProducts(); // Call the external function
+      console.log("fetching products", data);
+      if (data) {
+        setProducts(data); // Set the fetched data to the state
+      }
+    };
+    console.log("changing loading state");
+    setLoading(false);
+    getProducts();
+  }, []);
+
+  // Function to add a new product to the state
+  const addProductToState = (newProduct: SelectProduct) => {
+    console.log("adding product to state", newProduct);
+    setProducts({
+      // New product needs to be added to the state at the end
+      products: [...products.products, newProduct],
+      num_products: products.num_products + 1,
+    });
+  }
+
   return (
     <div className="my-10 px-4 lg:px-6 max-w-[95rem] mx-auto w-full flex flex-col gap-4">
       <ul className="flex">
@@ -50,14 +82,14 @@ export default function Products() {
           <DotsIcon />
         </div>
         <div className="flex flex-row gap-3.5 flex-wrap">
-          <AddProduct />
+          <AddProduct addProductToState={addProductToState} />
           <Button color="primary" startContent={<ExportIcon />}>
             Export to CSV
           </Button>
         </div>
       </div>
       <div className="max-w-[95rem] mx-auto w-full">
-        <TableWrapper />
+        <TableWrapper products={products} isLoading={loading} />
       </div>
     </div>
   );
