@@ -39,12 +39,24 @@ const columns = [
     label: "SHIPPING COST",
 },
 {
+    key: "purchase_price_mxn",
+    label: "PURCHASE PRICE (MXN)",
+},
+{
     key: "sale_price",
     label: "SALE PRICE",
 },
 {
+    key: "mx_iva",
+    label: "IVA (MXN)",
+},
+{
     key: "profit",
     label: "PROFIT (MXN)",
+},
+{
+    key: "profit_percentage",
+    label: "PROFIT (%)",
 }
 ];
 
