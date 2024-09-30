@@ -40,7 +40,7 @@ const columns = [
 },
 {
     key: "purchase_price_mxn",
-    label: "PURCHASE PRICE (MXN)",
+    label: "PURCHASE PRICE",
 },
 {
     key: "sale_price",
@@ -48,15 +48,15 @@ const columns = [
 },
 {
     key: "mx_iva",
-    label: "IVA (MXN)",
+    label: "IVA",
 },
 {
     key: "profit",
-    label: "PROFIT (MXN)",
+    label: "PROFIT",
 },
 {
     key: "profit_percentage",
-    label: "PROFIT (%)",
+    label: "PROFIT %",
 }
 ];
 

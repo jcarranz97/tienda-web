@@ -76,15 +76,25 @@ export const RenderCell = ({ product, columnKey }: Props) => {
         </div>
       );
     case "purchase_price":
-    case "purchase_price_mxn":
-    case "sale_price":
     case "shipping_cost":
-    case "mx_iva":
-    case "profit":
       // In case it is purchase price or sale price, we add format
       // as dolar sign with 2 decimal places and return it
       // If null, we return an empty string
-      return cellValue ? `$${cellValue.toFixed(2)}` : "";
+      return cellValue ? `$${cellValue.toFixed(2)} USD` : "";
+    case "purchase_price_mxn":
+    case "sale_price":
+    case "mx_iva":
+          // In case it is purchase price or sale price, we add format
+          // as dolar sign with 2 decimal places and return it
+          // If null, we return an empty string
+          return cellValue ? `$${cellValue.toFixed(2)} MXN` : "";
+    case "profit":
+            // In case it is purchase price or sale price, we add format
+            // as dolar sign with 2 decimal places and return it
+            // If null, we return an empty string
+            // The profit should be the value in MXN + the percentage of profit
+            // Example: 100.00 MXN (27%)
+            return product.profit ? `$${product.profit.toFixed(2)} MXN` : "";
     case "profit_percentage":
       // Truncate the profit percentage to 0 decimal places
       return cellValue ? `${cellValue.toFixed(0)}%` : "";
