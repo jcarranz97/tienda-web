@@ -10,6 +10,7 @@ export interface SelectProduct {
     location_name: string;
     purchase_price_mxn: number;
     sale_price: number;
+    shipping_cost_mxn: number;
     profit: number;
 }
 

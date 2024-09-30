@@ -38,6 +38,14 @@ const columns = [
     key: "sale_price",
     label: "SALE PRICE",
 },
+{
+    key: "shipping_cost_mxn",
+    label: "SHIPPING COST (MXN)",
+},
+{
+    key: "profit",
+    label: "PROFIT (MXN)",
+}
 ];
 
 
