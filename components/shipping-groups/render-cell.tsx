@@ -66,6 +66,8 @@ export const RenderCell = ({ shippingGroup, columnKey }: Props) => {
       ); */
     case "shipping_cost":
       return shippingGroup.shipping_cost ? `$${shippingGroup.shipping_cost.toFixed(2)}` : "";
+    case "total_purchase_price":
+        return shippingGroup.total_purchase_price ? `$${shippingGroup.total_purchase_price.toFixed(2)}` : "";
     case "dollar_price":
       // In case it is purchase price or sale price, we add format
       // as dolar sign with 2 decimal places and return it

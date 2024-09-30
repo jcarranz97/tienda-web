@@ -8,6 +8,7 @@ export interface ShippingGroup {
     shipping_cost: number;
     dollar_price: number;
     num_products: number;
+    total_purchase_price: number;
 }
 
 

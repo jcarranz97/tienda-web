@@ -42,6 +42,10 @@ const columns = [
 {
     key: "num_products",
     label: "NUM PRODUCTS",
+},
+{
+    key: "total_purchase_price",
+    label: "TOTAL PURCHASE PRICE",
 }
 ];
 

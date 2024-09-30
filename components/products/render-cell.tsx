@@ -77,7 +77,7 @@ export const RenderCell = ({ product, columnKey }: Props) => {
       );
     case "purchase_price":
     case "sale_price":
-    case "shipping_cost_mxn":
+    case "shipping_cost":
     case "profit":
       // In case it is purchase price or sale price, we add format
       // as dolar sign with 2 decimal places and return it
