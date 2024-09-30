@@ -20,7 +20,7 @@ import { PaginationControls } from "@/components/table/pagination-controls";
 const columns = [
 {
     key: "shipping_label",
-    label: "NAME",
+    label: "SHIPPING LABEL",
 },
 {
     key: "shipping_group",

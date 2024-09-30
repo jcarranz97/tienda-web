@@ -4,6 +4,7 @@ import { DeleteIcon } from "../icons/table/delete-icon";
 import { EditIcon } from "../icons/table/edit-icon";
 import { EyeIcon } from "../icons/table/eye-icon";
 import { SelectProduct } from "./actions";
+import { capitalize } from "@/utils/text_utils";
 
 interface Props {
   product: SelectProduct
@@ -14,17 +15,8 @@ export const RenderCell = ({ product, columnKey }: Props) => {
   // @ts-ignore
   const cellValue = product[columnKey];
   switch (columnKey) {
-    case "name":
-      return (
-        <User
-          avatarProps={{
-            src: "https://i.pravatar.cc/150?u=a04258114e29026702d",
-          }}
-          name={cellValue}
-        >
-          {product.shipping_label}
-        </User>
-      );
+    case "shipping_label":
+      return <span>{capitalize(product.shipping_label)}</span>;
     case "role":
       return (
         <div>

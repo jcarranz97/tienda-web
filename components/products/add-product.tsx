@@ -186,7 +186,7 @@ export const AddProduct: React.FC<AddProductProps> = ({ addProductToState }) => 
                               console.log("Product fetched successfully:", product);
                               // Add the product to the state
                               addProductToState(product);
-                              onClose();
+                              // onClose();
                             } else {
                               console.log("Failed to fetch product");
                               // Handle the error here
