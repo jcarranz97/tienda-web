@@ -78,7 +78,7 @@ export const addProduct = async (product: AddProductInput ): Promise<number> => 
     // Make a POST request to the server
     console.log(product);
     // The product object is sent as JSON in the parameters
-    const res = await fetch('http://localhost:8000/products/add-product/'
+    const res = await fetch('http://localhost:8000/products/'
       , {
         method: 'POST',
         headers: {
