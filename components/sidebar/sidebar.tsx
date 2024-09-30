@@ -74,9 +74,10 @@ export const SidebarWrapper = () => {
                 href="products"
               />
               <SidebarItem
-                isActive={pathname === "/reports"}
-                title="Reports"
+                isActive={pathname === "/shipping-groups"}
+                title="Shipping Groups"
                 icon={<ReportsIcon />}
+                href="shipping-groups"
               />
             </SidebarMenu>
 
