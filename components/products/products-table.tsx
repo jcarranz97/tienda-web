@@ -27,6 +27,10 @@ const columns = [
     label: "SHIPPING GROUP",
 },
 {
+    key: "location_name",
+    label: "LOCATION",
+},
+{
     key: "status",
     label: "STATUS",
 },
