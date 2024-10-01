@@ -40,7 +40,7 @@ const columns = [
 },
 {
     key: "purchase_price_mxn",
-    label: "PURCHASE PRICE",
+    label: "PURCHASE PRICE (MXN)",
 },
 {
     key: "sale_price",
