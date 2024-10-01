@@ -94,10 +94,24 @@ export const RenderCell = ({ product, columnKey }: Props) => {
             // If null, we return an empty string
             // The profit should be the value in MXN + the percentage of profit
             // Example: 100.00 MXN (27%)
-            return product.profit ? `$${product.profit.toFixed(2)} MXN` : "";
+            // If the profit is negative, it should be printed in red
+            // If the profit is positive, it should be printed in green
+            return cellValue ? (
+              <span className={`font-semibold text-${cellValue > 0 ? "success" : "danger"} text-md`}>
+                {cellValue > 0 ? "+" : ""} {cellValue.toFixed(2)} MXN
+              </span>
+            ) : "";
     case "profit_percentage":
       // Truncate the profit percentage to 0 decimal places
-      return cellValue ? `${cellValue.toFixed(0)}%` : "";
+      // Make a rule for the profit percentage so that if it is positive
+      // it is printed in green with an arrow pointing up and if it is negative
+      // it is printed in red with an arrow pointing down
+      // Example: <span className="font-semibold text-success text-xs">{"↑"}</span>
+      return cellValue ? (
+        <span className={`font-semibold text-${cellValue > 0 ? "success" : "danger"} text-md`}>
+          {cellValue > 0 ? "↑" : "↓"} {Math.abs(cellValue)}%
+        </span>
+      ) : "";
     default:
       return cellValue;
   }
