@@ -98,7 +98,7 @@ export const RenderCell = ({ product, columnKey }: Props) => {
             // If the profit is positive, it should be printed in green
             return cellValue ? (
               <span className={`font-semibold text-${cellValue > 0 ? "success" : "danger"} text-md`}>
-                {cellValue > 0 ? "+" : ""} {cellValue.toFixed(2)} MXN
+                {cellValue > 0 ? "+" : ""}{cellValue.toFixed(2)} MXN
               </span>
             ) : "";
     case "profit_percentage":
