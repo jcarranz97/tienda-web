@@ -1,5 +1,7 @@
 import React from "react";
 import { Invoice } from "./actions";
+import { Link } from "@nextui-org/react";
+import { FaMoneyCheckDollar } from "react-icons/fa6";
 import { capitalize } from "@/utils/text_utils";
 
 interface Props {
@@ -16,6 +18,16 @@ export const RenderCell = ({ invoice, columnKey }: Props) => {
     case "total_amount":
     case "total_paid":
         return cellValue ? `$${cellValue.toFixed(2)} MXN` : "";
+    case "actions":
+      return (
+        <Link
+          showAnchorIcon
+          // the href if the current path/{invoice.id}
+          href={`/invoices/${invoice.id}`}
+          anchorIcon={<FaMoneyCheckDollar />}
+        >
+        </Link>
+      );
     default:
       return <span>{cellValue}</span>;
   }

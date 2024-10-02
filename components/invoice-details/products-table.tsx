@@ -10,9 +10,9 @@ import {
 } from "@nextui-org/react";
 import React from "react";
 import {
-    FetchInvoicesResponse,
+    FetchInvoiceProductsResponse,
 } from "./actions";
-import { RenderCell } from "./render-cell";
+import { RenderCell, RenderCellInvoiceProduct} from "./render-cell";
 import { TableFooter } from "@/components/table/footer";
 import { PaginationControls } from "@/components/table/pagination-controls";
 
@@ -20,50 +20,34 @@ import { PaginationControls } from "@/components/table/pagination-controls";
 
 const columns = [
 {
-    key: "id",
-    label: "ID",
+    key: "shipping_label",
+    label: "SHIPPING LABEL",
 },
 {
-    key: "seller_name",
-    label: "SELLER",
+    key: "description",
+    label: "DESCRIPTION",
 },
 {
-    key: "total_amount",
-    label: "TOTAL AMOUNT",
-},
-{
-    key: "num_products",
-    label: "NUM PRODUCTS",
-},
-{
-    key: "num_payments",
-    label: "NUM PAYMENTS",
-},
-{
-    key: "total_paid",
-    label: "TOTAL PAID",
-},
-{
-    key: "actions",
-    label: "ACTIONS",
+    key: "sale_price",
+    label: "SALE PRICE",
 }
 ];
 
 
 
-export const TableWrapper: React.FC<{ invoices: FetchInvoicesResponse, isLoading: boolean }> = ({ invoices, isLoading}) => {
+export const InvoiceProductsTable: React.FC<{ invoice_products: FetchInvoiceProductsResponse, isLoading: boolean }> = ({ invoice_products, isLoading}) => {
     
     const [page, setPage] = React.useState(1);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);  // Default rows per page
     
     // Memorize the items to display
     const items = React.useMemo(() => {
-        if (!invoices || !invoices.invoices) return [];
+        if (!invoice_products || !invoice_products.products) return [];
         const start = (page - 1) * rowsPerPage;
         const end = start + rowsPerPage;
     
-        return invoices.invoices.slice(start, end);
-    }, [page, rowsPerPage, invoices]);
+        return invoice_products.products.slice(start, end);
+    }, [page, rowsPerPage, invoice_products]);
 
     return (
         <div className=" w-full flex flex-col gap-4">
@@ -72,11 +56,14 @@ export const TableWrapper: React.FC<{ invoices: FetchInvoicesResponse, isLoading
                 bottomContent={
                     <PaginationControls
                         page={page}
-                        numItems={invoices.num_invoices}
+                        numItems={invoice_products.num_products}
                         rowsPerPage={rowsPerPage}
                         setPage={setPage}
                         loading={isLoading}
                     />
+                }
+                topContent={
+                    <div>Products</div>
                 }
             >
                 <TableHeader columns={columns}>
@@ -91,7 +78,7 @@ export const TableWrapper: React.FC<{ invoices: FetchInvoicesResponse, isLoading
                     <TableRow key={item.id}>
                         {(columnKey) => 
                             <TableCell>
-                                {RenderCell({ invoice: item, columnKey: columnKey })}
+                                {RenderCellInvoiceProduct({ invoice_product: item, columnKey: columnKey })}
                             </TableCell>}
                         
                     </TableRow>
@@ -99,7 +86,7 @@ export const TableWrapper: React.FC<{ invoices: FetchInvoicesResponse, isLoading
                 </TableBody>
             </Table>
             <TableFooter
-                numItems={invoices.num_invoices}
+                numItems={invoice_products.num_products}
                 rowsPerPage={rowsPerPage}
                 setRowsPerPage={setRowsPerPage}
                 setPage={setPage}
