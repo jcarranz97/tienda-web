@@ -1,17 +1,15 @@
-import { User, Tooltip, Chip } from "@nextui-org/react";
+import { Chip } from "@nextui-org/react";
 import React from "react";
-import { DeleteIcon } from "../icons/table/delete-icon";
-import { EditIcon } from "../icons/table/edit-icon";
-import { EyeIcon } from "../icons/table/eye-icon";
 import { SelectProduct } from "./actions";
-import { capitalize } from "@/utils/text_utils";
+import { AddSalePriceModal } from "../product-actions/add-sale-price-modal";
 
 interface Props {
   product: SelectProduct
   columnKey: string | React.Key;
+  replaceProductInState: (updatedProduct: SelectProduct) => void;
 }
 
-export const RenderCell = ({ product, columnKey }: Props) => {
+export const RenderCell = ({ product, columnKey, replaceProductInState }: Props) => {
   // @ts-ignore
   const cellValue = product[columnKey];
   switch (columnKey) {
@@ -48,32 +46,9 @@ export const RenderCell = ({ product, columnKey }: Props) => {
 
     case "actions":
       return (
-        <div className="flex items-center gap-4 ">
-          <div>
-            <Tooltip content="Details">
-              <button onClick={() => console.log("View user", product.id_product)}>
-                <EyeIcon size={20} fill="#979797" />
-              </button>
-            </Tooltip>
-          </div>
-          <div>
-            <Tooltip content="Edit user" color="secondary">
-              <button onClick={() => console.log("Edit user", product.id_product)}>
-                <EditIcon size={20} fill="#979797" />
-              </button>
-            </Tooltip>
-          </div>
-          <div>
-            <Tooltip
-              content="Delete user"
-              color="danger"
-              onClick={() => console.log("Delete user", product.id_product)}
-            >
-              <button>
-                <DeleteIcon size={20} fill="#FF0080" />
-              </button>
-            </Tooltip>
-          </div>
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <AddSalePriceModal product={product} replaceProductInState={replaceProductInState} />
+          {/*       <ProductActions product={product} /> */}
         </div>
       );
     case "purchase_price":

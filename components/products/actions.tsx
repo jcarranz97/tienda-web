@@ -172,3 +172,31 @@ export const fetchProduct = async (id: number): Promise<SelectProduct | null> =>
     return null; // Handle fetch error gracefully
   }
 }
+
+
+
+
+// post add-sale-price-with-id2 which is a function that takes the
+// product_id and the sale_price as arguments and returns a promise with
+// the SelectProduct type as the return value.
+export const addSalePrice = async (product_id: number, sale_price: string): Promise<SelectProduct | null> => {
+  try {
+    const res = await fetch(`http://localhost:8000/products/${product_id}/add-sale-price/`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'accept': 'application/json',
+        },
+        body: JSON.stringify({ sale_price: sale_price }),
+      });
+    if (!res.ok) {
+      throw new Error(`Error: ${res.status}`);
+    }
+    const data: SelectProduct = await res.json();
+    return data; // Return the fetched data
+  } catch (error) {
+    console.error('Failed to add sale price:', error);
+    return null; // Handle fetch error gracefully
+  }
+}

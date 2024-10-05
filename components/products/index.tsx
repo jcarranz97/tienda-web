@@ -101,6 +101,23 @@ export default function Products() {
     });
   }
 
+  // Function to replace a product in the state
+  const replaceProductInState = (updatedProduct: SelectProduct) => {
+    const newProducts = products.products.map((product) => {
+      if (updatedProduct.id_product === product.id_product) {
+        console.log("!!!!!!!!!Product replaced!!!!!!!!!!!", product);
+        return updatedProduct;
+      }
+      return product;
+    });
+
+
+    setProducts({
+      products: newProducts,
+      num_products: products.num_products,
+    });
+  }
+
   // Filter the products based on selected criteria
   const filteredProducts = products.products.filter((product) => {
     return (
@@ -211,6 +228,7 @@ export default function Products() {
           products={{ products: filteredProducts, num_products: filteredProducts.length }}
           isLoading={loading}
           setSelectedProducts={(keys: Set<Key>) => setSelectedProducts(new Set(Array.from(keys).map(String)))}
+          replaceProductInState={replaceProductInState}
         />
       </div>
     </div>

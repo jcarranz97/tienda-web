@@ -6,7 +6,6 @@ import {
     TableColumn,
     TableHeader,
     TableRow,
-    Pagination,
     Spinner,
 } from "@nextui-org/react";
 import React from "react";
@@ -14,6 +13,7 @@ import { FetchProductsResponse, } from "./actions";
 import { RenderCell } from "./render-cell";
 import { TableFooter } from "@/components/table/footer";
 import { PaginationControls } from "@/components/table/pagination-controls";
+import { SelectProduct } from "./actions";
 
 
 
@@ -69,12 +69,22 @@ const columns = [
 {
     key: "profit_percentage",
     label: "PROFIT %",
+},
+{
+    key: "actions",
+    label: "ACTIONS",
 }
 ];
 
+type TableWrapperProps = {
+    products: FetchProductsResponse;
+    isLoading: boolean;
+    setSelectedProducts: (keys: Set<React.Key>) => void;
+    replaceProductInState: (product: SelectProduct) => void;
+};
 
-export const TableWrapper: React.FC<{ products: FetchProductsResponse, isLoading: boolean, setSelectedProducts: (keys: Set<React.Key>) => void }> = ({ products, isLoading, setSelectedProducts}) => {
-    
+
+export const TableWrapper: React.FC<TableWrapperProps> = ({ products, isLoading, setSelectedProducts, replaceProductInState}) => {  
     const [page, setPage] = React.useState(1);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);  // Default rows per page
     const [disabledKeys, setDisabledKeys] = React.useState<string[]>([]);
@@ -125,7 +135,7 @@ export const TableWrapper: React.FC<{ products: FetchProductsResponse, isLoading
                     >
                         {(columnKey) => 
                             <TableCell>
-                                {RenderCell({ product: item, columnKey: columnKey })}
+                                {RenderCell({ product: item, columnKey: columnKey, replaceProductInState: replaceProductInState })}
                             </TableCell>}
                         
                     </TableRow>
