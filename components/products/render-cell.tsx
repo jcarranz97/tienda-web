@@ -16,7 +16,8 @@ export const RenderCell = ({ product, columnKey }: Props) => {
   const cellValue = product[columnKey];
   switch (columnKey) {
     case "shipping_label":
-      return <span>{capitalize(product.shipping_label)}</span>;
+      // Shiping label should be printed in uppercase
+      return <span>{product.shipping_label.toUpperCase()}</span>;
     case "role":
       return (
         <div>
