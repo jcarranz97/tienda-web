@@ -9,6 +9,7 @@ export interface SelectProduct {
     status: string;
     location_name: string;
     purchase_price_mxn: number;
+    invoice_id: number;
     mx_iva: number;
     sale_price: number;
     shipping_cost: number;
