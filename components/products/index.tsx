@@ -30,6 +30,7 @@ import {
 } from "./actions";
 import { useEffect, useState } from 'react';
 import { capitalize } from "@/utils/text_utils";
+import * as XLSX from "xlsx";
 
 export default function Products() {
   const [products, setProducts] = useState<FetchProductsResponse>({ products: [], num_products: 1 });
@@ -128,6 +129,34 @@ export default function Products() {
     );
   });
   
+
+  const handleExport = () => {
+    // Prepare the data in a suitable format for Excel
+    console.log("Exporting products", filteredProducts);
+    const data = filteredProducts.map((product) => ({
+      // Index for the product starting from 1 to n
+      "Index": filteredProducts.indexOf(product) + 1,
+      // Shipping label in uppercase
+      "Identificador": product.shipping_label.toUpperCase(),
+      "Descripcion": product.description,
+      "Estado": product.status,
+      "Lugar": product.location_name,
+      "Precio de Venta": product.sale_price,
+      // Precio Sugerido is sale_price * 1.2 and rounded with no decimal places
+      // and also round it to have only multiples of 10
+      "Precio Sugerido": Math.round(product.sale_price * 1.2 / 10) * 10,
+    }));
+
+    // Create a worksheet
+    const worksheet = XLSX.utils.json_to_sheet(data);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Products");
+
+    // Export the workbook as an Excel file
+    XLSX.writeFile(workbook, "products.xlsx");
+  };
+
+
   return (
     <div className="my-10 px-4 lg:px-6 max-w-[95rem] mx-auto w-full flex flex-col gap-4">
       <ul className="flex">
@@ -204,7 +233,7 @@ export default function Products() {
           <div className="flex-grow"></div>
           <CreateInvoice addProductToState={addProductToState} selectedProducts={selectedProducts} />
           <AddProduct addProductToState={addProductToState} />
-          <Button color="primary" startContent={<ExportIcon />}>
+          <Button color="primary" startContent={<ExportIcon />} onClick={handleExport}>
             Export to CSV
           </Button>
           <Button
