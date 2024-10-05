@@ -19,8 +19,16 @@ import { PaginationControls } from "@/components/table/pagination-controls";
 
 const columns = [
 {
+    key: "id_product",
+    label: "ID",
+},
+{
     key: "shipping_label",
     label: "SHIPPING LABEL",
+},
+{
+    key: "description",
+    label: "DESCRIPTION",
 },
 {
     key: "shipping_group",
@@ -65,11 +73,11 @@ const columns = [
 ];
 
 
-export const TableWrapper: React.FC<{ products: FetchProductsResponse, isLoading: boolean }> = ({ products, isLoading}) => {
+export const TableWrapper: React.FC<{ products: FetchProductsResponse, isLoading: boolean, setSelectedProducts: (keys: Set<React.Key>) => void }> = ({ products, isLoading, setSelectedProducts}) => {
     
     const [page, setPage] = React.useState(1);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);  // Default rows per page
-    
+    const [disabledKeys, setDisabledKeys] = React.useState<string[]>([]);
     // Memorize the items to display
     const items = React.useMemo(() => {
         if (!products || !products.products) return [];
@@ -78,6 +86,13 @@ export const TableWrapper: React.FC<{ products: FetchProductsResponse, isLoading
     
         return products.products.slice(start, end);
     }, [page, rowsPerPage, products]);
+
+    // The disabledKeys are the products with invoice_id different from null
+    // As that means that the product is already in an invoice and we can't
+    // use it in another invoice
+    React.useEffect(() => {
+        setDisabledKeys(products.products.filter((product) => product.invoice_id !== null).map((product) => product.id_product.toString()));
+    }, [products.products]);
 
     return (
         <div className=" w-full flex flex-col gap-4">
@@ -92,6 +107,9 @@ export const TableWrapper: React.FC<{ products: FetchProductsResponse, isLoading
                         loading={isLoading}
                     />
                 }
+                selectionMode="multiple"
+                disabledKeys={disabledKeys}
+                onSelectionChange={(keys) => setSelectedProducts(new Set(keys))}
             >
                 <TableHeader columns={columns}>
                     {(column) => <TableColumn key={column.key}>{column.label}</TableColumn>}
@@ -102,7 +120,9 @@ export const TableWrapper: React.FC<{ products: FetchProductsResponse, isLoading
                     isLoading={isLoading}
                     >
                     {(item) => (
-                    <TableRow key={item.id_product}>
+                    <TableRow
+                        key={item.id_product}
+                    >
                         {(columnKey) => 
                             <TableCell>
                                 {RenderCell({ product: item, columnKey: columnKey })}
