@@ -6,7 +6,7 @@ import {
   SelectItem,
 } from "@nextui-org/react";
 import Link from "next/link";
-import React from "react";
+import React, { Key } from "react";
 import { DotsIcon } from "@/components/icons/accounts/dots-icon";
 import { ExportIcon } from "@/components/icons/accounts/export-icon";
 import { InfoIcon } from "@/components/icons/accounts/info-icon";
@@ -14,6 +14,7 @@ import { TrashIcon } from "@/components/icons/accounts/trash-icon";
 import { HouseIcon } from "@/components/icons/breadcrumb/house-icon";
 import { SettingsIcon } from "@/components/icons/sidebar/settings-icon";
 import { AddProduct } from "./add-product";
+import { CreateInvoice } from "./create-invoice";
 import { TableWrapper } from "./products-table";
 import { ProductsIcon } from "../icons/sidebar/products-icon";
 import { 
@@ -35,8 +36,9 @@ export default function Products() {
   const [productStatuses, setProductStatuses] = useState<FetchProductStatusesResponse>({ statuses: [] });
   const [shippingGroups, setShippingGroups] = useState<FetchShippingGroupsResponse>({ groups: [] });
   const [productLocations, setProductLocations] = useState<FetchProductLocationsResponse>({ locations: [] });
-
+  const [selectedProducts, setSelectedProducts] = useState<Set<string>>(new Set());
   const [loading, setLoading] = useState(true);
+  const [filterSearch, setFilterSearch] = useState<string>("");
 
   // State variables to store selected filters
   const [selectedStatus, setSelectedStatus] = useState<string>("");
@@ -104,7 +106,8 @@ export default function Products() {
     return (
       (selectedStatus === "" || product.status === selectedStatus) &&
       (selectedShippingGroup === "" || product.shipping_group === selectedShippingGroup) &&
-      (selectedLocation === "" || product.location_name === selectedLocation)
+      (selectedLocation === "" || product.location_name === selectedLocation) &&
+      (filterSearch === "" || product.shipping_label.toLowerCase().includes(filterSearch.toLowerCase()))
     );
   });
   
@@ -138,6 +141,7 @@ export default function Products() {
               mainWrapper: "w-full",
             }}
             placeholder="Search products"
+            onValueChange={(value) => setFilterSearch(value)}
           />
           <SettingsIcon />
           <TrashIcon />
@@ -181,12 +185,24 @@ export default function Products() {
           </Select>
             {/* Spacer div to create empty space */}
           <div className="flex-grow"></div>
-          <Button color="primary">
-            Create Invoice
-          </Button>
+          <CreateInvoice addProductToState={addProductToState} selectedProducts={selectedProducts} />
           <AddProduct addProductToState={addProductToState} />
           <Button color="primary" startContent={<ExportIcon />}>
             Export to CSV
+          </Button>
+          <Button
+            color="primary"
+            onClick={() => {
+              setLoading(true);
+              fetchProducts().then((data) => {
+                if (data) {
+                  setProducts(data);
+                  setLoading(false);
+                }
+              });
+            }}
+            >
+            Refresh
           </Button>
         </div>
       </div>
@@ -194,6 +210,7 @@ export default function Products() {
         <TableWrapper
           products={{ products: filteredProducts, num_products: filteredProducts.length }}
           isLoading={loading}
+          setSelectedProducts={(keys: Set<Key>) => setSelectedProducts(new Set(Array.from(keys).map(String)))}
         />
       </div>
     </div>
