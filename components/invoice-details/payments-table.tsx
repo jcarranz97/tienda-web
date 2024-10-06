@@ -28,6 +28,10 @@ const columns = [
     label: "AMOUNT",
 },
 {
+    key: "payment_comment",
+    label: "COMMENT",
+},
+{
     key: "payment_date",
     label: "PAYMENT DATE",
 }

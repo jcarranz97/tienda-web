@@ -4,6 +4,7 @@ export interface InvoicePayment {
     id: number;
     amount: string;
     payment_date: string;
+    payment_comment: string;
     [key: string]: any; // Add index signature
 }
 
