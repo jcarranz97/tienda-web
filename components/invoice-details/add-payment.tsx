@@ -46,7 +46,7 @@ export const AddPayment: React.FC<AddPaymentProps> = ({ invoice_id, addPaymentTo
 
   return (
     <>
-      <Button onPress={onOpen} color="primary">Add Payment</Button>
+      <Button onPress={onOpen} color="primary">Add Installement</Button>
       <Modal 
         isOpen={isOpen} 
         onOpenChange={onOpenChange}
@@ -55,7 +55,7 @@ export const AddPayment: React.FC<AddPaymentProps> = ({ invoice_id, addPaymentTo
         <ModalContent>
           {(onClose) => (
             <>
-              <ModalHeader className="flex flex-col gap-1">New Installment</ModalHeader>
+              <ModalHeader className="flex flex-col gap-1">Add Installment</ModalHeader>
               <ModalBody>
               <Input
                     isRequired
@@ -71,7 +71,7 @@ export const AddPayment: React.FC<AddPaymentProps> = ({ invoice_id, addPaymentTo
                 type="number"
               />
             <DatePicker 
-                label="Birth date"
+                label="Installement Date"
                 className="max-w-[284px]"
                 isRequired
                 onChange={(date) => setPaymentDate(date.toString())}
