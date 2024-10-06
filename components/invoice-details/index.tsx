@@ -82,6 +82,10 @@ export default function InvoiceDetails({ params }: InvoiceDetailsProps) {
     return <div>Loading...</div>;
   }
 
+  const addPaymentToState = (newPayment: any) => {
+    setInvoicePayments({ ...invoicePayments, payments: [...invoicePayments.payments, newPayment] });
+  }
+
   return (
     <div className="my-10 px-4 lg:px-6 max-w-[95rem] mx-auto w-full flex flex-col gap-4">
       <ul className="flex">
@@ -107,7 +111,13 @@ export default function InvoiceDetails({ params }: InvoiceDetailsProps) {
       <InvoiceCard invoiceDetails={invoiceDetails} />
       <div className="max-w-[95rem] mx-auto w-full flex gap-4">
         <div className="w-1/2">
-          <InvoicePaymentsTable invoice_payments={invoicePayments} isLoading={loading} />
+          <InvoicePaymentsTable
+            invoice_payments={invoicePayments}
+            isLoading={loading}
+            invoice_id={parseInt(invoice_id)}
+            addPaymentToState={addPaymentToState}
+            setInvoiceDetails={setInvoiceDetails}
+          />
         </div>
         <div className="w-1/2">
           <InvoiceProductsTable invoice_products={invoiceProducts} isLoading={loading} />

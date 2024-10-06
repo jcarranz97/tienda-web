@@ -19,7 +19,9 @@ export const RenderCell = ({ invoice_payment, columnKey }: Props) => {
     case "amount":
         return cellValue ? `$${cellValue.toFixed(2)} MXN` : "";
     case "payment_date":
-        return cellValue ? new Date(cellValue).toLocaleDateString() : "";
+      // Do not show the time, only the date. do not convert to local time
+      // and show with '/' separator
+      return <span>{cellValue.split("T")[0].replaceAll("-", "/")}</span>;
     default:
       return <span>{cellValue}</span>;
   }

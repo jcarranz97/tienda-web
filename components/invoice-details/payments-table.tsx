@@ -7,14 +7,18 @@ import {
     TableHeader,
     TableRow,
     Spinner,
+    Button,
 } from "@nextui-org/react";
 import React from "react";
 import {
     FetchInvoicePaymentsResponse,
+    InvoicePayment,
+    SelectInvoiceDetails,
 } from "./actions";
 import { RenderCell } from "./render-cell";
 import { TableFooter } from "@/components/table/footer";
 import { PaginationControls } from "@/components/table/pagination-controls";
+import { AddPayment } from "./add-payment";
 
 
 
@@ -38,9 +42,23 @@ const columns = [
 ];
 
 
-
-export const InvoicePaymentsTable: React.FC<{ invoice_payments: FetchInvoicePaymentsResponse, isLoading: boolean }> = ({ invoice_payments, isLoading}) => {
-    
+// Define the interface for the component props
+interface InvoicePaymentsTableProps {
+    invoice_payments: FetchInvoicePaymentsResponse; // Replace with actual type or interface
+    isLoading: boolean;
+    invoice_id: number;
+    addPaymentToState: (payment: InvoicePayment) => void;
+    setInvoiceDetails: (invoice_details: SelectInvoiceDetails) => void;
+}
+  
+// Define the functional component using the new interface
+export const InvoicePaymentsTable: React.FC<InvoicePaymentsTableProps> = ({
+    invoice_payments,
+    isLoading,
+    invoice_id,
+    addPaymentToState,
+    setInvoiceDetails,
+  }) => {
     const [page, setPage] = React.useState(1);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);  // Default rows per page
     
@@ -67,7 +85,10 @@ export const InvoicePaymentsTable: React.FC<{ invoice_payments: FetchInvoicePaym
                     />
                 }
                 topContent={
-                    <div>Installments</div>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                        <div>Installments</div>
+                        <AddPayment invoice_id={invoice_id} addPaymentToState={addPaymentToState} setInvoiceDetails={setInvoiceDetails} />
+                    </div>
                 }
             >
                 <TableHeader columns={columns}>

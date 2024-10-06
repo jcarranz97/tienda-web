@@ -91,3 +91,34 @@ export const fetchInvoiceDetails = async (invoice_id: number): Promise<SelectInv
     return null; // Handle fetch error gracefully
   }
 }
+
+
+
+export interface AddInvoicePayment {
+  invoice_id: number;
+  amount: string;
+  payment_date: string;
+  payment_comment: string;
+}
+
+
+export const addInvoicePayment = async (data: AddInvoicePayment): Promise<InvoicePayment | null> => {
+  try {
+    console.log("Sending payment data", data);
+    const res = await fetch(`http://localhost:8000/invoices/${data.invoice_id}/payments`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+    if (!res.ok) {
+      throw new Error(`Error: ${res.status}`);
+    }
+    const payment: InvoicePayment = await res.json();
+    return payment; // Return the created payment
+  } catch (error) {
+    console.error('Failed to add payment:', error);
+    return null; // Handle fetch error gracefully
+  }
+}
