@@ -231,7 +231,7 @@ export default function Products() {
           </Select>
             {/* Spacer div to create empty space */}
           <div className="flex-grow"></div>
-          <CreateInvoice addProductToState={addProductToState} selectedProducts={selectedProducts} />
+          <CreateInvoice addProductToState={addProductToState} selectedProductsIndexes={selectedProducts} products={products.products} />
           <AddProduct addProductToState={addProductToState} />
           <Button color="primary" startContent={<ExportIcon />} onClick={handleExport}>
             Export to CSV

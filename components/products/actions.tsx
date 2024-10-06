@@ -36,6 +36,24 @@ export interface FetchProductStatusesResponse {
   statuses: ProductStatus[];
 }
 
+
+export interface Seller {
+  id: number;
+  name: string;
+}
+
+
+export interface FetchSellersResponse {
+  sellers: Seller[];
+}
+
+export interface createInvoice {
+  id_seller: number;
+  notes: string;
+  products: number[];
+  payment: string;
+}
+
 // Fetch posts with type annotations
 export const fetchProducts = async (): Promise<FetchProductsResponse | null> => {
   try {
@@ -198,5 +216,49 @@ export const addSalePrice = async (product_id: number, sale_price: string): Prom
   } catch (error) {
     console.error('Failed to add sale price:', error);
     return null; // Handle fetch error gracefully
+  }
+}
+
+
+export const fetchSellers = async (): Promise<FetchSellersResponse | null> => {
+  try {
+    const res = await fetch('http://localhost:8000/sellers/get-sellers/');
+    if (!res.ok) {
+      throw new Error(`Error: ${res.status}`);
+    }
+    const data: FetchSellersResponse = await res.json();
+    return data; // Return the fetched data
+  } catch (error) {
+    console.error('Failed to fetch sellers:', error);
+    return null; // Handle fetch error gracefully
+  }
+}
+
+
+
+export const createInvoice = async (invoice: createInvoice): Promise<number> => {
+  try {
+    // Make a POST request to the server
+    console.log("Creating invoice - ", invoice);
+    // The product object is sent as JSON in the parameters
+    const res = await fetch('http://localhost:8000/invoices/'
+      , {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'accept': 'application/json',
+        },
+        body: JSON.stringify(invoice),
+      });
+    if (!res.ok) {
+      throw new Error(`Error: ${res.status}`);
+    }
+    // The response is the new product id, which is returned as a number
+    const data = await res.json();
+    console.log("New invoice id:", data);
+    return data; // Return the new product id
+  } catch (error) {
+    console.error('Failed to add invoice:', error);
+    return 0; // Handle add product error gracefully
   }
 }

@@ -20,6 +20,10 @@ import { PaginationControls } from "@/components/table/pagination-controls";
 
 const columns = [
 {
+    key: "id",
+    label: "ID",
+},
+{
     key: "name",
     label: "NAME",
 },
