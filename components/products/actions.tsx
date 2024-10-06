@@ -52,6 +52,8 @@ export interface createInvoice {
   notes: string;
   products: number[];
   payment: string;
+  payment_date: string | null;
+  payment_comment: string | null;
 }
 
 // Fetch posts with type annotations

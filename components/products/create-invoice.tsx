@@ -22,6 +22,7 @@ import {
     getKeyValue,
     Textarea,
     Card,
+    DatePicker,
   } from "@nextui-org/react";
   import React from "react";
   import {
@@ -74,6 +75,20 @@ import {
     }
     ];
   
+// Utility function to convert local date to UTC and return the date part only
+const localToUtc = (localDate: Date | null | undefined) => {
+  if (!localDate) return ""; // Handle case where the date is null or undefined
+
+  // Calculate the UTC date
+  const utcDate = new Date(localDate.getTime() + localDate.getTimezoneOffset() * 60000);
+
+  // Format the UTC date to return only the date part (YYYY-MM-DD)
+  const formattedDate = utcDate.toISOString().split('T')[0];
+  
+  return formattedDate; // Return just the date part
+};
+
+
   export const CreateInvoice: React.FC<AddProductProps> = ({ addProductToState, selectedProductsIndexes, products}) => {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [productStatus, setProductStatus] = React.useState<string>("active");
@@ -81,6 +96,8 @@ import {
     const [sellers, setSellers] = useState<Seller[]>([]);
     const [payment, setPayment] = React.useState<string>("");
     const [isCreatingInvoice, setIsCreatingInvoice] = useState<boolean>(false);
+    const [paymentDate, setPaymentDate] = React.useState<string>("");
+    const [paymentComment, setPaymentComment] = React.useState<string>("");
     // Define the state for product statuses, locations, and shipping groups
     // which are fetched from the server and shown in the select dropdowns
     const [productStatuses, setProductStatuses] = useState<ProductStatus[]>([]);
@@ -138,19 +155,25 @@ import {
                   </ModalHeader>
                     <ModalBody>
                       {/* In the modal, create a small table with the selected products and include, shipping_label, status and sale_price */}
-                      <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-                        <Select
-                          items={sellers}
-                          label="Seller name"
-                          placeholder="Who is the seller?"
-                          onChange={(event) => setSeller(event.target.value)}
-                          style={{ flex: 1 }} // Optional: make it more responsive
-                        >
-                          {(seller) => <SelectItem key={seller.id}>{seller.name}</SelectItem>}
-                        </Select>
+                      <Select
+                        items={sellers}
+                        label="Seller name"
+                        placeholder="Who is the seller?"
+                        onChange={(event) => setSeller(event.target.value)}
+                        style={{ flex: 1 }} // Optional: make it more responsive
+                      >
+                        {(seller) => <SelectItem key={seller.id}>{seller.name}</SelectItem>}
+                      </Select>
+                      <Textarea
+                        label="Notes"
+                        placeholder="Add notes here"
+                        //className="max-w-xs"
+                        onValueChange={(value) => setNotes(value)}
+                      />
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
                         <Input
                           isRequired
-                          label="Payment"
+                          label="First Payment"
                           variant="bordered"
                           placeholder="0.00"
                           onValueChange={(value) => setPayment(value)}
@@ -160,14 +183,21 @@ import {
                             </div>
                           }
                           type="number"
-                          style={{ flex: 1 }} // Optional: make it more responsive
+                          style={{ width: '120px' }} // Set a fixed width for the input
+                        />
+                        <DatePicker
+                          label="First Payment Date"
+                          className="max-w-[284px]" // You can adjust this width as needed
+                          isRequired
+                          onChange={(date) => setPaymentDate(date.toString())}
+                          // Default value is today
                         />
                       </div>
                       <Textarea
-                        label="Notes"
-                        placeholder="Add notes here"
-                        //className="max-w-xs"
-                        onValueChange={(value) => setNotes(value)}
+                        label="First Payment Comments"
+                        placeholder="Enter your comments here"
+                        className="max-w-xs"
+                        onValueChange={(value) => setPaymentComment(value)}
                       />
                       <Table aria-label="products-for-invoice">
                         <TableHeader columns={columns}>
@@ -202,6 +232,8 @@ import {
                           products: selectedProducts.map((product) => product.id_product),
                           notes: notes,
                           payment: payment,
+                          payment_date: localToUtc(new Date(paymentDate)),
+                          payment_comment: paymentComment,
                         }).then((response) => {
                           setIsCreatingInvoice(false);
                           if (response) {

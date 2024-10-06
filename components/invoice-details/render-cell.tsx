@@ -17,7 +17,7 @@ export const RenderCell = ({ invoice_payment, columnKey }: Props) => {
 
   switch (columnKey) {
     case "amount":
-        return cellValue ? `$${cellValue.toFixed(2)} MXN` : "";
+        return  `$${cellValue.toFixed(2)} MXN`;
     case "payment_date":
       // Do not show the time, only the date. do not convert to local time
       // and show with '/' separator
