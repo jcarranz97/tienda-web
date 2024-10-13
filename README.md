@@ -69,3 +69,15 @@ npm run dev
 ```
 
 Now you can visit https://localhost:3000 in your browser.
+
+## Running with Docker
+
+Create new image
+```bash
+docker build -t nextjs-docker .
+```
+
+Run the image
+```bash
+docker run -p 3000:3000 nextjs-docker
+```
