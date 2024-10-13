@@ -135,16 +135,17 @@ export default function Products() {
     console.log("Exporting products", filteredProducts);
     const data = filteredProducts.map((product) => ({
       // Index for the product starting from 1 to n
-      "Index": filteredProducts.indexOf(product) + 1,
+      "Indice": filteredProducts.indexOf(product) + 1,
       // Shipping label in uppercase
       "Identificador": product.shipping_label.toUpperCase(),
       "Descripcion": product.description,
       "Estado": product.status,
       "Lugar": product.location_name,
-      "Precio de Venta": product.sale_price,
+      "Precio de Compra": product.sale_price,
       // Precio Sugerido is sale_price * 1.2 and rounded with no decimal places
       // and also round it to have only multiples of 10
-      "Precio Sugerido": Math.round(product.sale_price * 1.2 / 10) * 10,
+      "Precio Sugerido para Ganar 20%": Math.round(product.sale_price * 1.2 / 10) * 10,
+      "Precio Asignado por el Vendor": "",
     }));
 
     // Create a worksheet
