@@ -50,12 +50,18 @@ export const SidebarWrapper = () => {
                 isActive={pathname === "/accounts"}
                 title="Accounts"
                 icon={<AccountsIcon />}
-                href="accounts"
+                href="/accounts"
               />
               <SidebarItem
                 isActive={pathname === "/payments"}
                 title="Payments"
                 icon={<PaymentsIcon />}
+              />
+              <SidebarItem
+                isActive={pathname === "/invoices"}
+                title="Invoices"
+                icon={<BalanceIcon />}
+                href="/invoices"
               />
               <CollapseItems
                 icon={<BalanceIcon />}
@@ -71,11 +77,13 @@ export const SidebarWrapper = () => {
                 isActive={pathname === "/products"}
                 title="Products"
                 icon={<ProductsIcon />}
+                href="/products"
               />
               <SidebarItem
-                isActive={pathname === "/reports"}
-                title="Reports"
+                isActive={pathname === "/shipping-groups"}
+                title="Shipping Groups"
                 icon={<ReportsIcon />}
+                href="/shipping-groups"
               />
             </SidebarMenu>
 
