@@ -24,7 +24,7 @@ const columns = [
 },
 {
     key: "shipping_label",
-    label: "SHIPPING LABEL",
+    label: "SHIPPING P. LABEL",
 },
 {
     key: "description",
