@@ -44,6 +44,10 @@ const columns = [
     label: "TOTAL PAID",
 },
 {
+    key: "remaining_balance",
+    label: "REMAINING BALANCE",
+},
+{
     key: "invoice_status",
     label: "INVOICE STATUS",
 },

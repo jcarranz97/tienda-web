@@ -5,7 +5,8 @@ import {
     CardFooter,
     Chip,
 } from '@nextui-org/react';
-import { FaMoneyBill, FaBox, FaStore, FaWallet, FaUser } from 'react-icons/fa6';
+import { FaMoneyBill, FaBox, FaStore, FaUser } from 'react-icons/fa6';
+import { FaDollarSign, FaCreditCard } from 'react-icons/fa';
 import { FaShoppingCart } from 'react-icons/fa';
 import { FaRegStickyNote } from 'react-icons/fa';
 import { FaInfoCircle } from 'react-icons/fa';
@@ -42,9 +43,16 @@ const InvoiceCard = ({ invoiceDetails }: { invoiceDetails: SelectInvoiceDetails 
               </div>
     
               <div className="flex items-center gap-2">
-                <FaWallet size={18} color="#FF6347" />
+                <FaDollarSign size={18} color="#28A745" /> {/* Icon for Total Paid */}
                 <span>
                   Total Paid: <strong>${invoiceDetails.total_paid} MXN</strong>
+                </span>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <FaCreditCard size={18} color="#FF6347" /> {/* Icon for Remaining Balance */}
+                <span>
+                  Remaining Balance: <strong>${invoiceDetails.remaining_balance} MXN</strong>
                 </span>
               </div>
     

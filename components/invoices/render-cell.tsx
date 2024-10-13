@@ -20,7 +20,9 @@ export const RenderCell = ({ invoice, columnKey }: Props) => {
       return <span>{capitalize(invoice.seller_name)}</span>;
     case "total_amount":
     case "total_paid":
-        return cellValue ? `$${cellValue.toFixed(2)} MXN` : "";
+        return `$${cellValue.toFixed(2)} MXN`;
+    case "remaining_balance":
+      return `$${cellValue.toFixed(2)} MXN`;
     case "actions":
       return (
         <Link
