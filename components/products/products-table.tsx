@@ -39,6 +39,10 @@ const columns = [
     label: "LOCATION",
 },
 {
+    key: "invoice_id",
+    label: "INVOICE",
+},
+{
     key: "status",
     label: "STATUS",
 },

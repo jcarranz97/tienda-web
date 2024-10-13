@@ -45,8 +45,8 @@ export interface SelectInvoiceDetails {
 // Fetch posts with type annotations
 export const fetchInvoicePayments = async (invoice_id: number): Promise<FetchInvoicePaymentsResponse | null> => {
   try {
-    // URL: http://localhost:8000/invoices/{invoice_id}/payments
-    const res = await fetch(`http://localhost:8000/invoices/${invoice_id}/payments`);
+    // URL: ${process.env.NEXT_PUBLIC_API_URL}/invoices/{invoice_id}/payments
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/invoices/${invoice_id}/payments`);
     if (!res.ok) {
       throw new Error(`Error: ${res.status}`);
     }
@@ -62,8 +62,8 @@ export const fetchInvoicePayments = async (invoice_id: number): Promise<FetchInv
 // Fetch posts with type annotations
 export const fetchInvoiceProducts = async (invoice_id: number): Promise<FetchInvoiceProductsResponse | null> => {
   try {
-    // URL: http://localhost:8000/invoices/{invoice_id}/products
-    const res = await fetch(`http://localhost:8000/invoices/${invoice_id}/products`);
+    // URL: ${process.env.NEXT_PUBLIC_API_URL}/invoices/{invoice_id}/products
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/invoices/${invoice_id}/products`);
     if (!res.ok) {
       throw new Error(`Error: ${res.status}`);
     }
@@ -79,8 +79,8 @@ export const fetchInvoiceProducts = async (invoice_id: number): Promise<FetchInv
 // Fetch posts with type annotations
 export const fetchInvoiceDetails = async (invoice_id: number): Promise<SelectInvoiceDetails | null> => {
   try {
-    // URL: http://localhost:8000/invoices/{invoice_id}
-    const res = await fetch(`http://localhost:8000/invoices/${invoice_id}`);
+    // URL: ${process.env.NEXT_PUBLIC_API_URL}/invoices/{invoice_id}
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/invoices/${invoice_id}`);
     if (!res.ok) {
       throw new Error(`Error: ${res.status}`);
     }
@@ -105,7 +105,7 @@ export interface AddInvoicePayment {
 export const addInvoicePayment = async (data: AddInvoicePayment): Promise<InvoicePayment | null> => {
   try {
     console.log("Sending payment data", data);
-    const res = await fetch(`http://localhost:8000/invoices/${data.invoice_id}/payments`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/invoices/${data.invoice_id}/payments`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

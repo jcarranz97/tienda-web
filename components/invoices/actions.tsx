@@ -21,7 +21,7 @@ export interface FetchInvoicesResponse {
 // Fetch posts with type annotations
 export const fetchInvoices = async (): Promise<FetchInvoicesResponse | null> => {
   try {
-    const res = await fetch('http://localhost:8000/invoices/');
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/invoices/`);
     if (!res.ok) {
       throw new Error(`Error: ${res.status}`);
     }

@@ -59,7 +59,7 @@ export interface createInvoice {
 // Fetch posts with type annotations
 export const fetchProducts = async (): Promise<FetchProductsResponse | null> => {
   try {
-    const res = await fetch('http://localhost:8000/products/');
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/products/`);
     if (!res.ok) {
       throw new Error(`Error: ${res.status}`);
     }
@@ -74,7 +74,7 @@ export const fetchProducts = async (): Promise<FetchProductsResponse | null> => 
 
 export const fetchProductStatuses = async (): Promise<FetchProductStatusesResponse | null> => {
   try {
-    const res = await fetch('http://localhost:8000/products/get-products-statuses/');
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/products/get-products-statuses/`);
     if (!res.ok) {
       throw new Error(`Error: ${res.status}`);
     }
@@ -102,7 +102,7 @@ export const addProduct = async (product: AddProductInput ): Promise<number> => 
     // Make a POST request to the server
     console.log(product);
     // The product object is sent as JSON in the parameters
-    const res = await fetch('http://localhost:8000/products/'
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/products/`
       , {
         method: 'POST',
         headers: {
@@ -139,7 +139,7 @@ export interface FetchProductLocationsResponse {
 // Fetch posts with type annotations
 export const fetchProductLocations = async (): Promise<FetchProductLocationsResponse | null> => {
   try {
-    const res = await fetch('http://localhost:8000/products/get-locations/');
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/products/get-locations/`);
     if (!res.ok) {
       throw new Error(`Error: ${res.status}`);
     }
@@ -166,7 +166,7 @@ export interface FetchShippingGroupsResponse {
 // Fetch posts with type annotations
 export const fetchShippingGroups = async (): Promise<FetchShippingGroupsResponse | null> => {
   try {
-    const res = await fetch('http://localhost:8000/shipping/get-shipping-groups/');
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shipping/get-shipping-groups/`);
     if (!res.ok) {
       throw new Error(`Error: ${res.status}`);
     }
@@ -181,7 +181,7 @@ export const fetchShippingGroups = async (): Promise<FetchShippingGroupsResponse
 
 export const fetchProduct = async (id: number): Promise<SelectProduct | null> => {
   try {
-    const res = await fetch(`http://localhost:8000/products/${id}/`);
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/products/${id}/`);
     if (!res.ok) {
       throw new Error(`Error: ${res.status}`);
     }
@@ -201,7 +201,7 @@ export const fetchProduct = async (id: number): Promise<SelectProduct | null> =>
 // the SelectProduct type as the return value.
 export const addSalePrice = async (product_id: number, sale_price: string): Promise<SelectProduct | null> => {
   try {
-    const res = await fetch(`http://localhost:8000/products/${product_id}/add-sale-price/`,
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/products/${product_id}/add-sale-price/`,
       {
         method: 'POST',
         headers: {
@@ -224,7 +224,7 @@ export const addSalePrice = async (product_id: number, sale_price: string): Prom
 
 export const fetchSellers = async (): Promise<FetchSellersResponse | null> => {
   try {
-    const res = await fetch('http://localhost:8000/sellers/get-sellers/');
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/sellers/get-sellers/`);
     if (!res.ok) {
       throw new Error(`Error: ${res.status}`);
     }
@@ -243,7 +243,7 @@ export const createInvoice = async (invoice: createInvoice): Promise<number> => 
     // Make a POST request to the server
     console.log("Creating invoice - ", invoice);
     // The product object is sent as JSON in the parameters
-    const res = await fetch('http://localhost:8000/invoices/'
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/invoices/`
       , {
         method: 'POST',
         headers: {

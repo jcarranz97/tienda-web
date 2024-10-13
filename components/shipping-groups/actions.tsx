@@ -51,7 +51,7 @@ export interface AddShippingGroupInput {
 // Fetch posts with type annotations
 export const fetchShippingGroups = async (): Promise<FetchShippingGroupsResponse | null> => {
   try {
-    const res = await fetch('http://localhost:8000/shipping/get-shipping-groups/');
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shipping/get-shipping-groups/`);
     if (!res.ok) {
       throw new Error(`Error: ${res.status}`);
     }
@@ -66,7 +66,7 @@ export const fetchShippingGroups = async (): Promise<FetchShippingGroupsResponse
 
 export const fetchShippingGroupStatuses = async (): Promise<FetchShippingGroupStatusesResponse | null> => {
   try {
-    const res = await fetch('http://localhost:8000/shipping/get-shipping-statuses/');
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shipping/get-shipping-statuses/`);
     if (!res.ok) {
       throw new Error(`Error: ${res.status}`);
     }
@@ -81,7 +81,7 @@ export const fetchShippingGroupStatuses = async (): Promise<FetchShippingGroupSt
 
 export const fetchShippers = async (): Promise<FetchShippersResponse | null> => {
   try {
-    const res = await fetch('http://localhost:8000/shippers/get-shippers/');
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shippers/get-shippers/`);
     if (!res.ok) {
       throw new Error(`Error: ${res.status}`);
     }
@@ -96,7 +96,7 @@ export const fetchShippers = async (): Promise<FetchShippersResponse | null> => 
 
 export const addShippingGroup = async (product: AddShippingGroupInput ): Promise<number> => {
   try {
-    const res = await fetch('http://localhost:8000/shipping/add-shipping-group/', {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shipping/add-shipping-group/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -120,7 +120,7 @@ export const addShippingGroup = async (product: AddShippingGroupInput ): Promise
 
 export const fetchShippingGroup = async (id: number): Promise<ShippingGroup | null> => {
   try {
-    const res = await fetch(`http://localhost:8000/shipping/get-shipping-group/${id}`);
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shipping/get-shipping-group/${id}`);
     if (!res.ok) {
       throw new Error(`Error: ${res.status}`);
     }
