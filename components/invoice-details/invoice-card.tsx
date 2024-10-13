@@ -3,10 +3,12 @@ import {
     CardBody, 
     CardHeader, 
     CardFooter,
+    Chip,
 } from '@nextui-org/react';
 import { FaMoneyBill, FaBox, FaStore, FaWallet, FaUser } from 'react-icons/fa6';
 import { FaShoppingCart } from 'react-icons/fa';
 import { FaRegStickyNote } from 'react-icons/fa';
+import { FaInfoCircle } from 'react-icons/fa';
 import { Divider } from '@nextui-org/react';
 import { capitalize } from '@/utils/text_utils';
 import { SelectInvoiceDetails } from './actions';
@@ -46,6 +48,30 @@ const InvoiceCard = ({ invoiceDetails }: { invoiceDetails: SelectInvoiceDetails 
                 </span>
               </div>
     
+              {/* New section for Invoice Status with Chip */}
+              <div className="flex items-center gap-2">
+                <FaInfoCircle size={18} color="#808080" /> {/* Fixed color for the FaCircle */}
+                <span>
+                  Status: 
+                  <Chip
+                    size="lg"
+                    variant="flat"
+                    color={
+                      invoiceDetails.invoice_status === 'paid'
+                        ? "success"        // Assuming your library uses these names for colors
+                        : invoiceDetails.invoice_status === 'pending'
+                        ? "warning"
+                        : invoiceDetails.invoice_status === 'overpaid'
+                        ? "secondary"      // Use the secondary color for overpaid
+                        : "default"        // Fallback color for unknown status
+                    }
+                  >
+                    <span className="capitalize text-md">
+                      {capitalize(invoiceDetails.invoice_status || 'unknown')}
+                    </span>
+                  </Chip>
+                </span>
+              </div>
               <div className="flex items-center gap-2">
                 <FaBox size={18} color="#FFA500" />
                 <span>

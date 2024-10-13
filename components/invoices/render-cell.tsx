@@ -1,6 +1,9 @@
 import React from "react";
 import { Invoice } from "./actions";
-import { Link } from "@nextui-org/react";
+import {
+  Link,
+  Chip,
+} from "@nextui-org/react";
 import { FaMoneyCheckDollar } from "react-icons/fa6";
 import { capitalize } from "@/utils/text_utils";
 
@@ -28,6 +31,26 @@ export const RenderCell = ({ invoice, columnKey }: Props) => {
         >
         </Link>
       );
+    case "invoice_status":
+      // Invoice status is a Chip which changes color depending on the status
+      // We also capitalize the status.
+      // Colors are: success, danger, default
+      return (
+        <Chip
+          size="sm"
+          variant="flat"
+          color={
+            cellValue === "paid"
+              ? "success"
+              : cellValue === "pending"
+              ? "warning"
+              : "secondary"
+          }
+        >
+          <span className="capitalize text-xs">{cellValue}</span>
+        </Chip>
+      );
+      
     default:
       return <span>{cellValue}</span>;
   }

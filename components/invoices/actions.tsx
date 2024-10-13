@@ -8,6 +8,7 @@ export interface Invoice {
     num_of_products: number;
     num_of_payments: number;
     total_paid: number;
+    invoice_status: string;
     [key: string]: any; // Add index signature
 }
 

@@ -44,6 +44,10 @@ const columns = [
     label: "TOTAL PAID",
 },
 {
+    key: "invoice_status",
+    label: "INVOICE STATUS",
+},
+{
     key: "actions",
     label: "ACTIONS",
 }
