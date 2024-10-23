@@ -92,7 +92,6 @@ export interface AddProductInput {
   description: string;
   purchase_price: string;
   product_location_id: string;
-  product_status_id: string;
   shipping_group_id: string;
 }
 
