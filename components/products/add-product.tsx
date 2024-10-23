@@ -39,10 +39,8 @@ interface AddProductProps {
 
 export const AddProduct: React.FC<AddProductProps> = ({ addProductToState }) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const [productStatus, setProductStatus] = React.useState<string>("active");
   // Define the state for product statuses, locations, and shipping groups
   // which are fetched from the server and shown in the select dropdowns
-  const [productStatuses, setProductStatuses] = useState<ProductStatus[]>([]);
   const [productLocations, setProductLocations] = useState<ProductLocation[]>([]);
   const [shippingGroups, setShippingGroups] = useState<ShippingGroup[]>([]);
 
@@ -55,17 +53,6 @@ export const AddProduct: React.FC<AddProductProps> = ({ addProductToState }) => 
   const [error, setError] = useState('');
 
   // Fetch product statuses, locations, and shipping groups
-  useEffect(() => {
-    const getProductStatuses = async () => {
-      const data = await fetchProductStatuses();
-      if (data) {
-        console.log("[Product Statuses]", data.statuses);
-        setProductStatuses(data.statuses);
-      }
-    }
-    getProductStatuses();
-  }, []);
-
   useEffect(() => {
     const getProductLocations = async () => {
       const data = await fetchProductLocations();
@@ -149,15 +136,6 @@ export const AddProduct: React.FC<AddProductProps> = ({ addProductToState }) => 
                     >
                       {(group) => <SelectItem key={group.id}>{group.name}</SelectItem>}
                     </Select>
-                    <Select
-                      items={productStatuses}
-                      label="Status"
-                      placeholder="Product Status"
-                      className="max-w-xs"
-                      onChange={(event) => setProductStatus(event.target.value)}
-                    >
-                      {(animal) => <SelectItem key={animal.id}>{capitalize(animal.name)}</SelectItem>}
-                    </Select>
                   </ModalBody>
                 <ModalFooter>
                   <Button color="danger" variant="flat" onClick={onClose}>
@@ -175,7 +153,6 @@ export const AddProduct: React.FC<AddProductProps> = ({ addProductToState }) => 
                         description: description,
                         purchase_price: purchasePrice,
                         product_location_id: productLocation,
-                        product_status_id: productStatus,
                         shipping_group_id: shippingGroup,
                       }).then((response) => {
                         if (response) {
