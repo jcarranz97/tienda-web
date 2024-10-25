@@ -15,6 +15,9 @@ export interface SelectProduct {
     shipping_cost: number;
     profit: number;
     profit_percentage: number;
+    length: number;
+    width: number;
+    height: number;
 }
 
 
@@ -261,5 +264,31 @@ export const createInvoice = async (invoice: createInvoice): Promise<number> => 
   } catch (error) {
     console.error('Failed to add invoice:', error);
     return 0; // Handle add product error gracefully
+  }
+}
+
+
+// put update-product-size which is a function that takes the
+// product_id and the product_size as arguments and returns a promise with
+// the SelectProduct type as the return value.
+export const updateProductSize = async (product_id: number, length: string | null, width: string | null, height: string | null): Promise<SelectProduct | null> => {
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/products/${product_id}/size/`,
+      {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'accept': 'application/json',
+        },
+        body: JSON.stringify({ length: length, width: width, height: height }),
+      });
+    if (!res.ok) {
+      throw new Error(`Error: ${res.status}`);
+    }
+    const data: SelectProduct = await res.json();
+    return data; // Return the fetched data
+  } catch (error) {
+    console.error('Failed to add sale price:', error);
+    return null; // Handle fetch error gracefully
   }
 }

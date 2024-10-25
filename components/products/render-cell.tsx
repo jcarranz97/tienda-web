@@ -2,6 +2,7 @@ import { Chip } from "@nextui-org/react";
 import React from "react";
 import { SelectProduct } from "./actions";
 import { AddSalePriceModal } from "../product-actions/add-sale-price-modal";
+import { UpdateSizeModal } from "../product-actions/update-size";
 
 interface Props {
   product: SelectProduct
@@ -48,6 +49,7 @@ export const RenderCell = ({ product, columnKey, replaceProductInState }: Props)
       return (
         <div style={{ display: "flex", alignItems: "center" }}>
           <AddSalePriceModal product={product} replaceProductInState={replaceProductInState} />
+          <UpdateSizeModal product={product} replaceProductInState={replaceProductInState} />
           {/*       <ProductActions product={product} /> */}
         </div>
       );
@@ -88,6 +90,10 @@ export const RenderCell = ({ product, columnKey, replaceProductInState }: Props)
           {cellValue > 0 ? "↑" : "↓"} {Math.abs(cellValue)}%
         </span>
       ) : "";
+    case 'size':
+      // Size is the union of length, width and height separated by "x"
+      // if both length, width and height are null, we return an empty string
+      return product.length && product.width && product.height ? `${product.length}x${product.width}x${product.height}` : "";
     default:
       return cellValue;
   }
