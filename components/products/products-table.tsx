@@ -31,6 +31,10 @@ const columns = [
     label: "DESCRIPTION",
 },
 {
+    key: 'size',
+    label: 'SIZE (CM)',
+},
+{
     key: "shipping_group",
     label: "SHIPPING GROUP",
 },
