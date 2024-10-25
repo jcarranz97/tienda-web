@@ -18,6 +18,7 @@ export interface SelectProduct {
     length: number;
     width: number;
     height: number;
+    material: string;
 }
 
 
@@ -281,6 +282,32 @@ export const updateProductSize = async (product_id: number, length: string | nul
           'accept': 'application/json',
         },
         body: JSON.stringify({ length: length, width: width, height: height }),
+      });
+    if (!res.ok) {
+      throw new Error(`Error: ${res.status}`);
+    }
+    const data: SelectProduct = await res.json();
+    return data; // Return the fetched data
+  } catch (error) {
+    console.error('Failed to add sale price:', error);
+    return null; // Handle fetch error gracefully
+  }
+}
+
+
+// put update-material which is a function that takes the
+// product_id and the material as arguments and returns a promise with
+// the SelectProduct type as the return value.
+export const updateMaterial = async (product_id: number, material: string): Promise<SelectProduct | null> => {
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/products/${product_id}/material/`,
+      {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'accept': 'application/json',
+        },
+        body: JSON.stringify({ material: material }),
       });
     if (!res.ok) {
       throw new Error(`Error: ${res.status}`);

@@ -35,6 +35,10 @@ const columns = [
     label: 'SIZE (CM)',
 },
 {
+    key: 'material',
+    label: 'MATERIAL',
+},
+{
     key: "shipping_group",
     label: "SHIPPING GROUP",
 },

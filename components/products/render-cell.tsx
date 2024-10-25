@@ -3,6 +3,7 @@ import React from "react";
 import { SelectProduct } from "./actions";
 import { AddSalePriceModal } from "../product-actions/add-sale-price-modal";
 import { UpdateSizeModal } from "../product-actions/update-size";
+import { UpdateMaterialModal } from "../product-actions/update-material";
 
 interface Props {
   product: SelectProduct
@@ -50,6 +51,7 @@ export const RenderCell = ({ product, columnKey, replaceProductInState }: Props)
         <div style={{ display: "flex", alignItems: "center" }}>
           <AddSalePriceModal product={product} replaceProductInState={replaceProductInState} />
           <UpdateSizeModal product={product} replaceProductInState={replaceProductInState} />
+          <UpdateMaterialModal product={product} replaceProductInState={replaceProductInState} />
           {/*       <ProductActions product={product} /> */}
         </div>
       );
