@@ -81,3 +81,51 @@ Run the image
 ```bash
 docker run -p 3000:3000 nextjs-docker
 ```
+
+## NGINX Server
+
+You can use the NGINX server to serve the application.
+
+```bash
+sudo vim /etc/nginx/sites-available/bagsiuesei-nextjs
+```
+
+```bash
+server {
+    listen 80; # listen of the default HTTP port 80
+    server_name <Server IP>;  # Replace with your servers IP or domain name
+
+    location / {
+        proxy_pass http://localhost:3000; # Forward request to next.js app on port 3000 to port 80
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+    }
+
+    location /api/ {
+        proxy_pass http://localhost:8000;  # Point to FastAPI app
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
+```
+
+```bash
+sudo ln -s /etc/nginx/sites-available/bagsiuesei-nextjs /etc/nginx/sites-enabled/
+```
+
+Check nginx syntax
+```bash
+sudo nginx -t
+```
+
+Restart nginx
+
+```bash
+sudo systemctl restart nginx
+```
