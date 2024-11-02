@@ -50,6 +50,10 @@ export const AddProduct: React.FC<AddProductProps> = ({ addProductToState }) => 
   const [purchasePrice, setPurchasePrice] = React.useState<string>("0.00");
   const [productLocation, setProductLocation] = React.useState<string>("");
   const [shippingGroup, setShippingGroup] = React.useState<string>("");
+  const [length, setLength] = React.useState<string>("0.00");
+  const [width, setWidth] = React.useState<string>("0.00");
+  const [height, setHeight] = React.useState<string>("0.00");
+  const [material, setMaterial] = React.useState<string>("");
   const [error, setError] = useState('');
 
   // Fetch product statuses, locations, and shipping groups
@@ -136,6 +140,53 @@ export const AddProduct: React.FC<AddProductProps> = ({ addProductToState }) => 
                     >
                       {(group) => <SelectItem key={group.id}>{group.name}</SelectItem>}
                     </Select>
+                    <Input
+                      isRequired
+                      label="Length"
+                      variant="bordered"
+                      defaultValue={length}
+                      onValueChange={(value) => setLength(value)}
+                      endContent={
+                        <div className="pointer-events-none flex items-center">
+                          <span className="text-default-400 text-small">cm</span>
+                        </div>
+                      }
+                      type="number"
+                    />
+                    <Input
+                      isRequired
+                      label="Width"
+                      variant="bordered"
+                      defaultValue={width}
+                      onValueChange={(value) => setWidth(value)}
+                      endContent={
+                        <div className="pointer-events-none flex items-center">
+                          <span className="text-default-400 text-small">cm</span>
+                        </div>
+                      }
+                      type="number"
+                    />
+                    <Input
+                      isRequired
+                      label="Height"
+                      variant="bordered"
+                      defaultValue={height}
+                      onValueChange={(value) => setHeight(value)}
+                      endContent={
+                        <div className="pointer-events-none flex items-center">
+                          <span className="text-default-400 text-small">cm</span>
+                        </div>
+                      }
+                      type="number"
+                    />
+                    <Input
+                      isRequired
+                      label="Material"
+                      variant="bordered"
+                      defaultValue={material}
+                      onValueChange={(value) => setMaterial(value)}
+                      type="string"
+                    />
                   </ModalBody>
                 <ModalFooter>
                   <Button color="danger" variant="flat" onClick={onClose}>
@@ -154,6 +205,10 @@ export const AddProduct: React.FC<AddProductProps> = ({ addProductToState }) => 
                         purchase_price: purchasePrice,
                         product_location_id: productLocation,
                         shipping_group_id: shippingGroup,
+                        length: length,
+                        width: width,
+                        height: height,
+                        material: material,
                       }).then((response) => {
                         if (response) {
                           console.log("Product added successfully with id:", response);
