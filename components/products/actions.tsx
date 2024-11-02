@@ -97,6 +97,10 @@ export interface AddProductInput {
   purchase_price: string;
   product_location_id: string;
   shipping_group_id: string;
+  length: string;
+  width: string;
+  height: string;
+  material: string;
 }
 
 
